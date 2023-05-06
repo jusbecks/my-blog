@@ -11,14 +11,21 @@ from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 from flask_gravatar import Gravatar
 from functools import wraps
 import secrets
+import os
 
 app = Flask(__name__)
 app.app_context().push()
-app.config['SECRET_KEY'] = secrets.token_hex(32)
+# Code to work locally
+# app.config['SECRET_KEY'] = secrets.token_hex(32)
+# Code to work online
+app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+# Code to work locally
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+# Code to work online
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
