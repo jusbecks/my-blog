@@ -22,10 +22,7 @@ app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
-# Code to work locally
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
-# Code to work online
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:///blog.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -64,7 +61,6 @@ class BlogPost(db.Model):
 
 
 class User(UserMixin, db.Model):
-    __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(250), nullable=False)
     password = db.Column(db.String(250), nullable=False)
