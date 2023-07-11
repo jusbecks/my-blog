@@ -17,7 +17,7 @@ app = Flask(__name__)
 app.app_context().push()
 # Code to work locally
 # app.config['SECRET_KEY'] = secrets.token_hex(32)
-# Code to work online
+# Code to work when deployed
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 ckeditor = CKEditor(app)
 Bootstrap(app)
@@ -61,6 +61,7 @@ class BlogPost(db.Model):
 
 
 class User(UserMixin, db.Model):
+    __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(250), nullable=False)
     password = db.Column(db.String(250), nullable=False)
